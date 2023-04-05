@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": " ts-node index.ts",
-    "build": "npm install"
+    "build": "npm install && rimraf ./dist && tsc"
   },
   "nodemonConfig": {
     "ignore": [
