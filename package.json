@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.ts",
-    "build": "npm install"
+    "start": "node start index.ts",
+    "build": "npm run build"
   },
   "nodemonConfig": {
     "ignore": [
