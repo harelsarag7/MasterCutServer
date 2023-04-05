@@ -5,10 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node build/index.js"
-  },
-  "build": {
-    "output": "./public"
+    "start": "nodemon --exec ts-node index.ts"
   },
   "nodemonConfig": {
     "ignore": [
