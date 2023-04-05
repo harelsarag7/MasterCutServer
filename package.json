@@ -7,6 +7,9 @@
     "build": "tsc",
     "start": "node build/index.js"
   },
+  "build": {
+    "output": "./public"
+  },
   "nodemonConfig": {
     "ignore": [
       "*.json"
