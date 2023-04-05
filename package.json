@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec ts-node index.ts"
+    "build": "tsc",
+    "start": "node build/index.js"
   },
   "nodemonConfig": {
     "ignore": [
