@@ -2,14 +2,16 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node start index.ts",
-    "build": "npm run build"
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "nodemonConfig": {
     "ignore": [
-      "*.json"
+      "*.json",
+      "node_modules/",
+      "dist/"
     ]
   },
   "keywords": [],
