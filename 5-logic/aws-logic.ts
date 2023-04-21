@@ -55,7 +55,7 @@ export async function addImage(file: UploadedFile) {
     let apiKey = process.env.REMOVEBGAPI;
     let tries = 1;
   
-    while (tries <= 2) {
+    while (tries <= 6) {
       try {
         const result = await removeBackgroundFromImageUrl({
           url: imageUrl,
@@ -74,6 +74,25 @@ export async function addImage(file: UploadedFile) {
           console.log("Trying again with REMOVEBGAPI2...");
           apiKey = process.env.REMOVEBGAPI2;
         }
+  
+        if (tries == 2) {
+          console.log("Trying again with REMOVEBGAPI3...");
+          apiKey = process.env.REMOVEBGAPI3;
+        }
+  
+        if (tries == 3) {
+          console.log("Trying again with REMOVEBGAPI4...");
+          apiKey = process.env.REMOVEBGAPI4;
+        }
+        if (tries == 4) {
+          console.log("Trying again with REMOVEBGAPI5...");
+          apiKey = process.env.REMOVEBGAPI5;
+        }
+        if (tries == 5) {
+          console.log("Trying again with REMOVEBGAPI6...");
+          apiKey = process.env.REMOVEBGAPI6;
+        }
+   
   
         tries += 1;
       }
