@@ -1,6 +1,6 @@
 import { UploadedFile } from "express-fileupload";
 import { s3bucket } from "../2-utils/dal";
-import { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile, removeBackgroundFromImageUrl } from "remove.bg";
+import { removeBackgroundFromImageUrl } from "remove.bg";
 import { v4 as uuidv4 } from "uuid";
 import * as dotenv from 'dotenv';
 
