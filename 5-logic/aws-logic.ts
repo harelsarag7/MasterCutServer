@@ -2,7 +2,7 @@ import { UploadedFile } from "express-fileupload";
 import { s3bucket } from "../2-utils/dal";
 import { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile, removeBackgroundFromImageUrl } from "remove.bg";
 import { v4 as uuidv4 } from "uuid";
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
 
 dotenv.config({ path: ".env" });
 
@@ -50,19 +50,35 @@ export async function saveBase64ImageToS3(base64Image: string, imageId: string) 
 export async function addImage(file: UploadedFile) {
     const uniq = uuidv4();
     const imageId = await saveImagesToS3(file, uniq);
-    // console.log(imageId);
     const imageUrl = "https://master-cut.s3.us-east-1.amazonaws.com/" + imageId;
   
-    try {
-      const result = await removeBackgroundFromImageUrl({
-        url: imageUrl,
-        apiKey: process.env.REMOVEBGAPI,
-        size: "regular",
-        type: "auto",
-      });
-      const res = await saveBase64ImageToS3(result.base64img, "removed" + uniq + ".png");
-      return {"originial": imageId, "removed": res};
-    } catch (error) {
-      console.log(JSON.stringify(error));
+    let apiKey = process.env.REMOVEBGAPI;
+    let tries = 1;
+  
+    while (tries <= 2) {
+      try {
+        const result = await removeBackgroundFromImageUrl({
+          url: imageUrl,
+          apiKey: apiKey,
+          size: "regular",
+          type: "auto",
+        });
+  
+        const res = await saveBase64ImageToS3(result.base64img, "removed" + uniq + ".png");
+        return {"original": imageId, "removed": res};
+      } catch (error) {
+        console.log(`Error on try ${tries}: ${JSON.stringify(error)}`);
+  
+        // If it's the first try, use REMOVEBGAPI2
+        if (tries == 1) {
+          console.log("Trying again with REMOVEBGAPI2...");
+          apiKey = process.env.REMOVEBGAPI2;
+        }
+  
+        tries += 1;
+      }
     }
+  
+    console.log("Function failed after 2 tries.");
   }
+  
